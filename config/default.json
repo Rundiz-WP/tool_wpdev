@@ -1,0 +1,54 @@
+{
+    "pack": {
+        "versionHeaderFile": "readme.txt",
+        "versionPattern": "Stable tag(\\s?)(:?)(\\s?)(?<version>([\\d\\.]+)([-+\\.0-9a-z]*))",
+        "packPatterns": {
+            "dev": {
+                "patterns": [
+                    "**",
+                    ".*/**",
+                    ".*"
+                ],
+                "options": {
+                    "ignore": [
+                        ".backup",
+                        ".dist",
+                        ".git",
+                        ".phpdoc",
+                        ".phpunit*",
+                        "node_modules"
+                    ]
+                }
+            },
+            "prod": {
+                "patterns": [
+                    "**"
+                ],
+                "options": {
+                    "ignore": [
+                        ".*",
+                        ".backup",
+                        ".dev-notes",
+                        ".dist",
+                        ".git",
+                        ".phpdoc",
+                        ".phpunit*",
+                        "assets-src",
+                        "blocks-src",
+                        "composer.json",
+                        "composer.lock",
+                        "node_modules",
+                        "node_tasks",
+                        "package*.json",
+                        "phpunit.xml*",
+                        "tests"
+                    ]
+                }
+            }
+        },
+        "zipFilePrefix": "$folderName$",
+        "zipOptions": {
+            "zipPrefix": "$folderName$"
+        }
+    }
+}

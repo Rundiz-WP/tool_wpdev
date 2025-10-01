@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{programName}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <style>
+            a:has(code) {
+                color: #d63384;
+            }
+            code > a {
+                color: inherit;
+            }
+
+            .column-code-name {
+                width: 60%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row report-header">
+                <div class="col">
+                    <h1>Rundiz WordPress development tools - check WordPress requires at least</h1>
+                    <p>
+                        Report of WordPress required as least.<br>
+                        <a class="btn btn-outline-secondary btn-sm" href="#constants">Constants</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="#functions">Functions</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="#classes">Classes</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="#hook_actions">Hook actions</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="#hook_filters">Hook filters</a>
+                        <a class="btn btn-outline-primary btn-sm" href="#summary">Summary</a>
+                    </p>
+                </div>
+            </div><!-- .row report-header -->
+            <div class="row">
+                <div class="col">
+                    <h2 id="constants">Constants</h2>
+                    <div class="table-responsive">
+                        <table id="constants-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <h2 id="functions">Functions</h2>
+                    <div class="table-responsive">
+                        <table id="functions-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <h2 id="classes">Classes</h2>
+                    <div class="table-responsive">
+                        <table id="classes-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <h2 id="hook_actions">Hook actions</h2>
+                    <div class="table-responsive">
+                        <table id="hook_actions-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <h2 id="hook_filters">Hook filters</h2>
+                    <div class="table-responsive">
+                        <table id="hook_filters-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Version min <a href="#versionminmax">#</a></th>
+                                    <th>Version max <a href="#versionminmax">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- .row contents -->
+
+            <div class="row summary-row">
+                <div class="col">
+                    <h2 id="summary" class="text-primary">Summary</h2>
+                    <p>The maximum version of WordPress required.</p>
+                    <div class="table-responsive">
+                        <table id="summary-table" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Max of min <a href="#versionmaxof">#</a></th>
+                                    <th>Max of max <a href="#versionmaxof">#</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="column-code-name">Name</th>
+                                    <th>Max of min <a href="#versionmaxof">#</a></th>
+                                    <th>Max of max <a href="#versionmaxof">#</a></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- .row .summary-row -->
+
+            <footer class="row mt-3">
+                <div class="col">
+                    <h6 id="remarks">Remarks:</h6>
+                    <ul>
+                        <li id="versionminmax"><strong>Version min</strong> is minimum version of that code. 
+                            <strong>Version max</strong> is maximum version of that code that have updated.<br>
+                            For example:<pre class="bg-dark text-white p-2 language-php">
+/**
+ * @since 1.0
+ * @since 2.1 Add arguments
+ */
+function do_something($arg) {}
+</pre>
+                            You have to check again with your code that what change is in your condition.
+                        </li>
+                        <li id="versionmaxof">Version <strong>max of min</strong> is maximum version of the minimum versions. 
+                            Version <strong>max of max</strong> is maximum version of the maximum versions.
+                        </li>
+                    </ul>
+                </div>
+                <p class="fs-6 text-secondary">Report generated by <a href="https://rundiz.com" target="rundiz_com">{programName}</a> v.{programVersion}</p>
+            </footer>
+        </div><!-- .container -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/compare-versions/lib/umd/index.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            const checkDataPHPJSON = '{checkDataPHPJSONString}';
+            const { compareVersions, compare, satisfies, validate } = window.compareVersions;
+
+            document.addEventListener('DOMContentLoaded', () => {
+                checkDataPHPJSONObj = JSON.parse(checkDataPHPJSON);
+                let maxOfMin = {};
+                let maxOfMax = {};
+                let html = '';
+
+                // generate constants table row.
+                renderCodeType({
+                    'codeType': 'constants',
+                    'htmlSelector': '#constants-table tbody',
+                    'checkDataPHPJSONObj': checkDataPHPJSONObj,
+                    'maxOfMin': maxOfMin,
+                    'maxOfMax': maxOfMax,
+                });
+
+                // generate functions table row.
+                renderCodeType({
+                    'codeType': 'functions',
+                    'htmlSelector': '#functions-table tbody',
+                    'checkDataPHPJSONObj': checkDataPHPJSONObj,
+                    'maxOfMin': maxOfMin,
+                    'maxOfMax': maxOfMax,
+                });
+
+                // generate classes table row.
+                renderCodeType({
+                    'codeType': 'classes',
+                    'htmlSelector': '#classes-table tbody',
+                    'checkDataPHPJSONObj': checkDataPHPJSONObj,
+                    'maxOfMin': maxOfMin,
+                    'maxOfMax': maxOfMax,
+                });
+
+                // generate hook actions table row.
+                renderCodeType({
+                    'codeType': 'hook_actions',
+                    'htmlSelector': '#hook_actions-table tbody',
+                    'checkDataPHPJSONObj': checkDataPHPJSONObj,
+                    'maxOfMin': maxOfMin,
+                    'maxOfMax': maxOfMax,
+                });
+
+                // generate hook filters table row.
+                renderCodeType({
+                    'codeType': 'hook_filters',
+                    'htmlSelector': '#hook_filters-table tbody',
+                    'checkDataPHPJSONObj': checkDataPHPJSONObj,
+                    'maxOfMin': maxOfMin,
+                    'maxOfMax': maxOfMax,
+                });
+
+                if (Object.entries(maxOfMax).length <= 0) {
+                    maxOfMax = maxOfMin;
+                }
+
+                // render summary --------------------------------------------
+                if (Object.entries(maxOfMin).length > 0) {
+                    html = '';
+                    html += '<tr>';
+                    html += '<td>';
+                    html += '<h5>Code type: ' + maxOfMin.type + '</h5>';
+                    html += '<a href="#' + escapeHTMLAttribute(maxOfMin.type + '_' + maxOfMin.name) + '"><code>' + maxOfMin.name + '</code></a>';
+                    html += '</td>';// close td of code name
+                    html += '<td class="table-success">' + maxOfMin.version + '</td>';
+                    html += '<td></td>';
+                    html += '</tr>';
+
+                    if (Object.entries(maxOfMax).length > 0) {
+                        html += '<tr>';
+                        html += '<td>';
+                        html += '<h5>Code type: ' + maxOfMax.type + '</h5>';
+                        html += '<a href="#' + escapeHTMLAttribute(maxOfMax.type + '_' + maxOfMax.name) + '"><code>' + maxOfMax.name + '</code></a>';
+                        html += '</td>';// close td of code name
+                        html += '<td></td>';
+                        html += '<td class="table-success">' + maxOfMax.version + '</td>';
+                        html += '</tr>';
+                    }
+
+                    document.querySelector('#summary-table tbody').innerHTML = html;
+                }
+                // end render summary ----------------------------------------
+            });// end DOMContentLoaded
+
+
+            /**
+             * Escape HTML for attribute value.
+             * 
+             * @param {string} htmlValue
+             * @return {string}
+             */
+            function escapeHTMLAttribute(htmlValue) {
+                if (typeof(htmlValue) !== 'string') {
+                    return htmlValue;
+                }
+
+                htmlValue = _.escape(htmlValue);
+                htmlValue = htmlValue.replaceAll(/\\/g, '_');
+                return htmlValue;
+            }// escapeHTMLAttribute
+
+
+            /**
+             * Check if value is end with function mark `()`
+             * 
+             * @param {string} value
+             * @returns {boolean}
+             */
+            function isEndWithFunctionMark(value) {
+                if (typeof(value) !== 'string') {
+                    return false;
+                }
+
+                const regexp = /\(\)$/;
+                return regexp.test(value);
+            }// isEndWithFunctionMark
+
+
+            /**
+             * Render code by type
+             * 
+             * @param {string} codeType Code type such as 'constants', 'functions', etc.
+             * @param {string} htmlSelector
+             * @param {string} maxOfMin
+             * @param {string} maxOfMax
+             */
+            function renderCodeType({codeType, htmlSelector, checkDataPHPJSONObj, maxOfMin, maxOfMax}) {
+                let html = '';
+                let linkToRefPrefix = '';
+                if ('functions' === codeType) {
+                    linkToRefPrefix = 'https://developer.wordpress.org/reference/functions/';
+                } else if ('classes' === codeType) {
+                    linkToRefPrefix = 'https://developer.wordpress.org/reference/classes/';
+                } else if (['hook_actions', 'hook_filters'].includes(codeType)) {
+                    linkToRefPrefix = 'https://developer.wordpress.org/reference/hooks/';
+                }
+
+                for (const [codeName, codeItem] of Object.entries(checkDataPHPJSONObj[codeType])) {
+                    let displayLink = true;
+                    if ('classes' === codeType) {
+                        if (codeItem?.unresolveName === true) {
+                            displayLink = false;
+                        }
+                    }
+
+                    setMaxOfMinAndMax({
+                        'codeVersions': codeItem.versions, 
+                        'codeType': codeType,
+                        'codeName': codeName,
+                        'maxOfMin': maxOfMin, 
+                        'maxOfMax': maxOfMax, 
+                    });
+
+                    html += '<tr id="' + codeType + '_' + escapeHTMLAttribute(codeName) + '">';
+                    html += '<td>';
+                        if ('' !== linkToRefPrefix && true === displayLink) {
+                            html += '<a href="' + linkToRefPrefix + encodeURIComponent(convertToWPURLSegment(codeName)) + '" target="reference">';
+                        }
+                        html += '<code>' + codeName + '</code>';
+                        if ('classes' === codeType && codeItem?.unresolveName === true && codeItem?.unresolveRemark) {
+                                html += '<br><small class="ms-3">' + codeItem.unresolveRemark + '</small>';
+                        }
+                        if ('' !== linkToRefPrefix && true === displayLink) {
+                            html += '</a>';
+                        }
+                        if (typeof(codeItem.file) === 'string') {
+                            html += '<div class="ms-3 text-secondary">';
+                            html += codeItem.file;
+                            if (typeof(codeItem.line) === 'string' || typeof(codeItem.line) === 'number') {
+                                html += ' : ' + codeItem.line;
+                            }
+                            html += '</div>';
+                        }
+                    html += '</td>';
+                    html += '<td>' + (codeItem.versions?.min ?? '') + '</td>';
+                    html += '<td>' + (codeItem.versions?.max ?? '') + '</td>';
+                    html += '</tr>';
+
+                    // render class's members. ------------------------------------------------------
+                    if (
+                        'classes' === codeType &&
+                        typeof(codeItem.members) === 'object' && 
+                        Object.entries(codeItem.members).length > 0
+                    ) {
+                        for (const [memberName, memberItem] of Object.entries(codeItem.members)) {
+                            setMaxOfMinAndMax({
+                                'codeVersions': memberItem.versions, 
+                                'codeType': codeType,
+                                'codeName': codeName + '::' + memberName,
+                                'maxOfMin': maxOfMin, 
+                                'maxOfMax': maxOfMax, 
+                            });
+
+                            html += '<tr id="' + codeType + '_' + escapeHTMLAttribute(codeName) + '::' + escapeHTMLAttribute(memberName) + '">';
+                            html += '<td>';
+                            html += '<div class="ms-3">';
+                            html += '<code>' + codeName + '::'
+                            if ('' !== linkToRefPrefix && true === displayLink && isEndWithFunctionMark(memberName)) {
+                                html += '<a href="' + linkToRefPrefix + encodeURIComponent(convertToWPURLSegment(codeName)) + '/' + encodeURIComponent(convertToWPURLSegment(memberName)) + '" target="reference">';
+                            }
+                            html += memberName;
+                            if ('' !== linkToRefPrefix && true === displayLink && isEndWithFunctionMark(memberName)) {
+                                html += '</a>';
+                            }
+                            html += '</code>';
+                            html += '</div>';
+                            if (typeof(memberItem.file) === 'string') {
+                                html += '<div class="ms-5 text-secondary">';
+                                html += memberItem.file;
+                                if (typeof(memberItem.line) === 'string' || typeof(memberItem.line) === 'number') {
+                                    html += ' : ' + memberItem.line;
+                                }
+                                html += '</div>';
+                            }
+                            html += '</td>';// close td class member name
+                            html += '<td>' + (memberItem.versions?.min ?? '') + '</td>';
+                            html += '<td>' + (memberItem.versions?.max ?? '') + '</td>';
+                            html += '</tr>';
+                        }// endfor; class members
+                    }
+                }// endfor;
+                const selectedTbody = document.querySelector(htmlSelector);
+                if (typeof(selectedTbody) === 'object' && selectedTbody !== null) {
+                    if ('' === html) {
+                        html = '<tr><td colspan="3">Not found matched WordPress core data.</td></tr>';
+                    }
+                    selectedTbody.innerHTML = html;
+                }
+            }// renderCodeType
+
+
+            /**
+             * Convert to WordPress.org URL segment by remove end function mark `()` and strip '{', '}', '$'.
+             * 
+             * Example `function()` will becomes `function`.
+             * 
+             * @param {string} value
+             * @returns {string}
+             */
+            function convertToWPURLSegment(value) {
+                if (typeof(value) !== 'string') {
+                    return value;
+                }
+                value = value.replace(/\(\)$/, '');
+                value = value.replace(/([\{\}\$]+)/g, '');
+                return value;
+            }// convertToWPURLSegment
+
+
+            /**
+             * Set max of min and max of max.
+             * 
+             * @param {object} codeVersions The code versions object that contain `.min`, `.max` inside.
+             * @param {string} codeType Code type such as 'constants', 'functions', etc.
+             * @param {string} codeName
+             * @param {string} maxOfMin
+             * @param {string} maxOfMax
+             */
+            function setMaxOfMinAndMax({codeVersions, codeType, codeName, maxOfMin, maxOfMax}) {
+                if (typeof(codeVersions?.min) !== 'undefined') {
+                    if (compare(codeVersions.min, (maxOfMin.version ?? '0'), '>')) {
+                        maxOfMin.type = codeType;
+                        maxOfMin.name = codeName;
+                        maxOfMin.version = codeVersions.min;
+                    }
+                }
+
+                if (typeof(codeVersions?.max) !== 'undefined') {
+                    if (compare(codeVersions.max, (maxOfMax.version ?? '0'), '>')) {
+                        maxOfMax.type = codeType;
+                        maxOfMax.name = codeName;
+                        maxOfMax.version = codeVersions.max;
+                    }
+                }
+            }// setMaxOfMinAndMax
+        </script>
+    </body>
+</html>

@@ -1,0 +1,151 @@
+{
+    "moduleName": "My Plugin",
+    "wpDev": true,
+    "build": {
+        "clean": {
+            "destinations": [
+                {
+                    "patterns": [
+                        "assets/css/**"
+                    ],
+                    "options": {
+                    }
+                },
+                {
+                    "patterns": [
+                        "assets/js/**"
+                    ],
+                    "options": {
+                    }
+                }
+            ]
+        },
+        "copy": {
+            "copyTasks": [
+                {
+                    "patterns": "assets-src/css/*.*",
+                    "destination": "assets/css"
+                },
+
+                {
+                    "patterns": "assets-src/js/*.*",
+                    "destination": "assets/js"
+                },
+
+                {
+                    "patterns": "node_modules/third-party-package/dist/*.*",
+                    "destination": "assets/js/third-party-package"
+                },
+                {
+                    "patterns": "node_modules/third-party-package/LICENCE",
+                    "rename": "LICENSE",
+                    "destination": "assets/js/third-party-package"
+                }
+            ],
+            "copyWP": [
+                {
+                    "patterns": "App/**",
+                    "destination": "App"
+                },
+                {
+                    "patterns": "assets/**",
+                    "destination": "assets"
+                },
+                {
+                    "patterns": "*.html",
+                    "destination": "."
+                },
+                {
+                    "patterns": "*.md",
+                    "destination": "."
+                },
+                {
+                    "patterns": "*.php",
+                    "destination": "."
+                },
+                {
+                    "patterns": "*.txt",
+                    "destination": "."
+                }
+            ]
+        },
+        "customTasks": [
+            "minifyCss.mjs",
+            "concatJs.mjs"
+        ]
+    },
+    "watch": {
+        "watcher": [
+            {
+                "patterns": "App/**",
+                "destination": "App"
+            },
+            {
+                "patterns": "assets/**",
+                "destination": "assets"
+            },
+            {
+                "patterns": "*.php",
+                "destination": "."
+            }
+        ],
+        "customWatches": [
+            "watchAssetsSrc.mjs"
+        ]
+    },
+    "writeVersions": [
+        {
+            "nodePackage": "ace-builds",
+            "assetsDataPattern": [
+                "rdyte\\-ace\\-editor\\-.+",
+                "rdyte\\-ace\\-ext\\-.+"
+            ],
+            "assetsDataFile": "App/Controllers/Settings.php"
+        }
+    ],
+    "pack": {
+        "versionHeaderFile": "readme.txt",
+        "versionPattern": "Stable tag(\\s?)(:?)(\\s?)(?<version>([\\d\\.]+)([-+\\.0-9a-z]*))",
+        "packPatterns": {
+            "dev": {
+                "patterns": [
+                    "**",
+                    ".*/**",
+                    ".*"
+                ],
+                "options": {
+                    "ignore": [
+                        ".dist",
+                        ".git",
+                        "node_modules",
+                        "package-*.json"
+                    ]
+                }
+            },
+            "prod": {
+                "patterns": [
+                    "**"
+                ],
+                "options": {
+                    "ignore": [
+                        ".*",
+                        ".dev-notes",
+                        ".dist",
+                        ".git",
+                        ".phpdoc",
+                        ".phpunit*",
+                        "assets-src",
+                        "node_modules",
+                        "node_tasks",
+                        "package*.json",
+                        "tests"
+                    ]
+                }
+            }
+        },
+        "zipFilePrefix": "myplugin",
+        "zipOptions": {
+            "zipPrefix": "myplugin"
+        }
+    }
+}

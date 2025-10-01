@@ -1,0 +1,33 @@
+{
+  "name": "wp-dev",
+  "version": "0.1.0",
+  "description": "WordPress development tools.",
+  "type": "module",
+  "private": true,
+  "main": "wpdev.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "author": "Vee W.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "chokidar": "^4.0.3",
+    "clean-css": "^5.3.3",
+    "cli-color": "^2.0.4",
+    "compare-versions": "^6.1.1",
+    "concat-with-sourcemaps": "^1.1.0",
+    "del": "^8.0.0",
+    "globby": "^14.1.0",
+    "jsonpath-plus": "^10.3.0",
+    "lodash": "^4.17.21",
+    "minimatch": "^10.0.3",
+    "php-parser": "^3.2.5",
+    "terser": "^5.43.1",
+    "uglify-js": "^3.19.3",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "jest": "^30.1.1"
+  }
+}
