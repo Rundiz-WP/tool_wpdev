@@ -69,6 +69,7 @@ describe('Paths.mjs test', () => {
         expect(Path.replaceDestinationFolder('assets/js/file.js', '', 'assets/**')).toMatch(/^js\/file\.js$/);
         expect(Path.replaceDestinationFolder('inc/file.php', 'inc', 'inc/**')).toMatch(/^inc\/file\.php$/);
         expect(Path.replaceDestinationFolder('inc/file.php', '', 'inc/**')).toMatch(/^file\.php$/);
+        expect(Path.replaceDestinationFolder('inc/file.php', '', 'inc/*.*')).toMatch(/^file\.php$/);
         expect(Path.replaceDestinationFolder('file.php', '.', ['*.php'])).toMatch(/^\.\/file\.php$/);
         expect(Path.replaceDestinationFolder('file.php', '', ['*.php'])).toMatch(/^file\.php$/);
         expect(Path.replaceDestinationFolder('file.php', '')).toMatch(/^file\.php$/);// no pattern
@@ -77,14 +78,34 @@ describe('Paths.mjs test', () => {
         expect(Path.replaceDestinationFolder('assets/js/file.js', 'assets', ['assets/**/*.css'])).toMatch(/^assets\/js\/file\.js$/);
         expect(Path.replaceDestinationFolder('/file.php', '', ['*.phpt'])).toMatch(/^file\.php$/);
 
-        // the test below must not errors because it's not found glob pattern and its value must be correct.
-        expect(
-            Path.replaceDestinationFolder(
-                'assets-src/css/some-item/some-style.css', 
-                'assets/css/some-item', 
-                ['assets-src/css/some-item/some-style.css']
-            )
-        )
-        .toMatch(/^assets\/css\/some\-item\/some\-style\.css/);
+        // the test below must not errors because it's not found glob pattern like above (`**`).
+        // due to there is no glob pattern (*); so, the destination will be replace file path from the beginning but always left the file name not replaced.
+        expect(Path.replaceDestinationFolder('assets-src/css/some-style.css', 'assets/css', ['assets-src/css/some-style.css']))
+        .toMatch(/^assets\/css\/some\-style\.css/);
+        // destination is longer than input file (first argument).
+        expect(Path.replaceDestinationFolder('assets-src/css/style.css', 'assets/css/subfolder', ['assets-src/css/subfolder/style.css']))
+        .toMatch(/^assets\/css\/subfolder\/style\.css/);
+        // destination is shorter than input file.
+        expect(Path.replaceDestinationFolder('assets-src/css/style.css', 'asset-x', ['assets-src/css/subfolder/style.css']))
+        .toMatch(/^asset\-x\/css\/style\.css/);
+        // no destination and pattern is not glob. the result should not change.
+        expect(Path.replaceDestinationFolder('assets-src/css/style.css', '', ['assets-src/css/style.css']))
+        .toMatch(/^assets\-src\/css\/style\.css/);
+
+        expect(Path.replaceDestinationFolder('node_modules/@fortawesome/css/all.css', 'assets/vendor/fontawesome/css', ['node_modules/@fortawesome/css/all*']))
+        .toMatch(/^assets\/vendor\/fontawesome\/css\/all.css/);
+
+        // on below..
+        // the first glob * is match any folder because it follow with `/`. so, that will be match anything before first found folder with destination value.
+        expect(Path.replaceDestinationFolder('node_modules/package/scss/file.scss', 'assets/package', ['node_modules/package/*/*']))
+        .toMatch(/^assets\/package\/scss\/file\.scss/);
+        expect(Path.replaceDestinationFolder('node_modules/package/scss/file.ext', 'assets/package', ['node_modules/package/*/*.ext']))
+        .toMatch(/^assets\/package\/scss\/file\.ext/);
+        expect(Path.replaceDestinationFolder('node_modules/package/scss/file.ext', 'assets/package/subfolder', ['node_modules/package/*/*.ext']))
+        .toMatch(/^assets\/package\/subfolder\/scss\/file\.ext/);
+        expect(Path.replaceDestinationFolder('node_modules/package/scss/file.ext', 'assets/ext', ['node_modules/package/*/*.ext']))
+        .toMatch(/^assets\/ext\/scss\/file\.ext/);
+        expect(Path.replaceDestinationFolder('node_modules/package/scss/file.ext', '', ['node_modules/package/*/*.ext']))
+        .toMatch(/^scss\/file\.ext/);
     });
 });

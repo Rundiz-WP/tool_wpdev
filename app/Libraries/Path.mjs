@@ -114,21 +114,29 @@ export default class Path {
                 if (remapDest) {
                     return Path.removeBeginSlash(remapDest);
                 }
-            } else {
-                // if not found glob pattern to regexp pattern matched.
-                if (!eachPattern.includes('*')) {
-                    // if not found glob `*` sign.
-                    let filePathExp = filePath.split(sep);
-                    const destinationExp = destination.split(sep);
-                    for (const [index, eachFilePathExp] of filePathExp.entries()) {
-                        if (typeof(destinationExp[index]) === 'string' && typeof(eachFilePathExp) === 'string') {
+            }// endif;
+
+            // the above check is not matched, try with another.
+            if (!eachPattern.includes('**')) {
+                // if not found glob `**` sign.
+                let filePathExp = filePath.split(sep);
+                const filePathFilename = filePathExp.at(-1);
+                filePathExp.splice(-1, 1);
+                const destinationExp = destination.split(sep);
+                if ('' !== destination && destinationExp.length > 0) {
+                    for (const [index, eachDestExp] of destinationExp.entries()) {
+                        if (typeof(eachDestExp) === 'string') {
                             filePathExp[index] = destinationExp[index];
                         }
                     }// endfor;
-                    filePath = filePathExp.join(sep);
                 }
-            }// endif;
-        }// endfor;
+                filePathExp.push(filePathFilename);
+                filePath = filePathExp.join(sep);
+                return Path.removeBeginSlash(filePath);
+            } else {
+                console.error('Unknown pattern. Please report this problem on GitHub ( https://github.com/Rundiz-WP/tool_wpdev ). Pattern: "' + JSON.stringify(eachPattern, null, 4) + '"');
+            }
+        }// endif;
 
         // come to this line means failed to work with it. return original file path
         return Path.removeBeginSlash(filePath);
