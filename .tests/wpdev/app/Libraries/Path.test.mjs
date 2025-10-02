@@ -76,5 +76,15 @@ describe('Paths.mjs test', () => {
         // below is failed to test with glob pattern. it must returns original file path (but remove begin slashes).
         expect(Path.replaceDestinationFolder('assets/js/file.js', 'assets', ['assets/**/*.css'])).toMatch(/^assets\/js\/file\.js$/);
         expect(Path.replaceDestinationFolder('/file.php', '', ['*.phpt'])).toMatch(/^file\.php$/);
+
+        // the test below must not errors because it's not found glob pattern and its value must be correct.
+        expect(
+            Path.replaceDestinationFolder(
+                'assets-src/css/some-item/some-style.css', 
+                'assets/css/some-item', 
+                ['assets-src/css/some-item/some-style.css']
+            )
+        )
+        .toMatch(/^assets\/css\/some\-item\/some\-style\.css/);
     });
 });

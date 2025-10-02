@@ -103,12 +103,29 @@ export default class Path {
             const regexFromGlobPattern = minimatch.makeRe(eachPattern);
             // capture begin path of glob pattern before parentheses `()`.
             const beginPathinGlobPattern = regexFromGlobPattern.toString().match(/^\/?\^?(?<beginpath>.*?)\(/);
-            if (typeof(beginPathinGlobPattern.groups?.beginpath) !== 'undefined') {
+
+            if (typeof(beginPathinGlobPattern?.groups?.beginpath) !== 'undefined') {
+                // if found glob pattern to regexp pattern matched.
+                // example: pattern `assets-src/**` will be convert to regular expression pattern `^assets\-src(?:\/|(?:(?!(?:\/|^)\.).)*?)?$`
+                // and this regular expression pattern will match the code `regexFromGlobPattern.toString().match(..)` above.
                 const regexBeginPath = new RegExp(beginPathinGlobPattern.groups.beginpath + '(.+)');
                 const removedBeginPath = filePath.replace(regexBeginPath, "$1");
                 const remapDest = Path.removeTrailingSlash(destination) + sep + Path.removeBeginSlash(removedBeginPath);
                 if (remapDest) {
                     return Path.removeBeginSlash(remapDest);
+                }
+            } else {
+                // if not found glob pattern to regexp pattern matched.
+                if (!eachPattern.includes('*')) {
+                    // if not found glob `*` sign.
+                    let filePathExp = filePath.split(sep);
+                    const destinationExp = destination.split(sep);
+                    for (const [index, eachFilePathExp] of filePathExp.entries()) {
+                        if (typeof(destinationExp[index]) === 'string' && typeof(eachFilePathExp) === 'string') {
+                            filePathExp[index] = destinationExp[index];
+                        }
+                    }// endfor;
+                    filePath = filePathExp.join(sep);
                 }
             }// endif;
         }// endfor;
