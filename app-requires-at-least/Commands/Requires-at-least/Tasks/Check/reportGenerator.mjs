@@ -125,8 +125,12 @@ export default class ReportGenerator {
         const programName = NtConfigObj.getValue('moduleName');
         reportTemplate = reportTemplate.replaceAll(/\{programName\}/g, programName);
         // replace `{programVersion}`.
-        const packageJSONObj = JSON.parse(fs.readFileSync('./package.json'));
-        reportTemplate = reportTemplate.replaceAll(/\{programVersion\}/g, packageJSONObj.version);
+        if (fs.existsSync('./package.json')) {
+            const packageJSONObj = JSON.parse(fs.readFileSync('./package.json'));
+            reportTemplate = reportTemplate.replaceAll(/\{programVersion\}/g, packageJSONObj.version);
+        } else {
+            reportTemplate = reportTemplate.replaceAll(/\{programVersion\}/g, '');
+        }
         // replace `{checkDataPHPJSON}`
         reportTemplate = reportTemplate.replaceAll(/\{checkDataPHPJSONFile\}/g, path.basename(this.#checkDataPHPJSON));
         reportTemplate = reportTemplate.replaceAll(/\{checkDataPHPJSONString\}/g, 
