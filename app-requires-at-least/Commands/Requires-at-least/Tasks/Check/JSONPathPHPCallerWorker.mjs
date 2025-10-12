@@ -502,7 +502,9 @@ export default class JSONPathPHPCallerWorker {
                                 fullClassName = lookupVarResult;
                             } else if (typeof(lookupVarResult) === 'object') {
                                 const queriedClass = JSONPathPHPCallerObj.queryPHPClass({'children': lookupVarResult});
-                                fullClassName = this.#getClassName(parsedCode, queriedClass[0], namespaceString);
+                                if (typeof(queriedClass) === 'object' && Array.isArray(queriedClass) && queriedClass.length > 0) {
+                                    fullClassName = this.#getClassName(parsedCode, queriedClass[0], namespaceString);
+                                }
                             }
                         } else if (firstArg.items[0].value?.kind === 'new') {
                             // if first array value is new object. (`[new ClassName, 'method']`)
