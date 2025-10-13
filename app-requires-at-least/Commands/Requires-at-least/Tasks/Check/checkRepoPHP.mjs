@@ -205,6 +205,7 @@ export const checkRepoPHP = class CheckRepoPHP {
                 return {
                     'min': min,
                     'max': max,
+                    'versions': wpCoreDataObj[type][name].versions,
                 }
             }
         }// endif; there is versions data on core or not
@@ -212,6 +213,7 @@ export const checkRepoPHP = class CheckRepoPHP {
         return {
             'min': null,
             'max': null,
+            'versions': null,
         }
     }// #checkAgainstWPCore
 
@@ -390,6 +392,7 @@ export const checkRepoPHP = class CheckRepoPHP {
                             this.#repoCodes[type][className].members[memberName].versions = {
                                 'min': min,
                                 'max': max,
+                                'versions': wpCoreDataObj[type][className].members[memberName]?.versions,
                             };
                         } else {
                             if (compareVersions(this.#repoCodes[type][className].members[memberName].versions?.min, min, '>')) {

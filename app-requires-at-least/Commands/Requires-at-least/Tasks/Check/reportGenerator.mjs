@@ -102,7 +102,9 @@ export default class ReportGenerator {
             throw new Error('The argument `JSONString` must be string.');
         }
 
-        return JSONString.replaceAll(/\\/g, '\\\\');
+        JSONString = JSONString.replaceAll(/\\/g, '\\\\');
+        JSONString = JSONString.replaceAll(/\'/g, '\\\'');
+        return JSONString
     }// #escapeJSONForVar
 
 

@@ -12,9 +12,27 @@
             code > a {
                 color: inherit;
             }
+            table td,
+            table th {
+                word-break: break-all;
+                word-wrap: break-word;
+            }
 
             .column-code-name {
                 width: 60%;
+            }
+            .column-version-description {
+                width: 12%;
+            }
+            @media (min-width: 850px) {
+                .column-version-description {
+                    width: 15%;
+                }
+            }
+            @media (min-width: 1600px) {
+                .column-version-description {
+                    width: 20%;
+                }
             }
         </style>
     </head>
@@ -42,6 +60,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -50,6 +69,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -63,6 +83,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -71,6 +92,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -84,6 +106,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -92,6 +115,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -105,6 +129,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -113,6 +138,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -126,6 +152,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -134,6 +161,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Version min <a href="#versionminmax">#</a></th>
                                     <th>Version max <a href="#versionminmax">#</a></th>
                                 </tr>
@@ -152,6 +180,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Max of min <a href="#versionmaxof">#</a></th>
                                     <th>Max of max <a href="#versionmaxof">#</a></th>
                                 </tr>
@@ -160,6 +189,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="column-code-name">Name</th>
+                                    <th class="column-version-description">Versions &amp; descriptions</th>
                                     <th>Max of min <a href="#versionmaxof">#</a></th>
                                     <th>Max of max <a href="#versionmaxof">#</a></th>
                                 </tr>
@@ -259,7 +289,7 @@ function do_something($arg) {}
                 if (Object.entries(maxOfMin).length > 0) {
                     html = '';
                     html += '<tr>';
-                    html += '<td>';
+                    html += '<td colspan="2">';
                     html += '<h5>Code type: ' + maxOfMin.type + '</h5>';
                     html += '<a href="#' + escapeHTMLAttribute(maxOfMin.type + '_' + maxOfMin.name) + '"><code>' + maxOfMin.name + '</code></a>';
                     html += '</td>';// close td of code name
@@ -269,7 +299,7 @@ function do_something($arg) {}
 
                     if (Object.entries(maxOfMax).length > 0) {
                         html += '<tr>';
-                        html += '<td>';
+                        html += '<td colspan="2">';
                         html += '<h5>Code type: ' + maxOfMax.type + '</h5>';
                         html += '<a href="#' + escapeHTMLAttribute(maxOfMax.type + '_' + maxOfMax.name) + '"><code>' + maxOfMax.name + '</code></a>';
                         html += '</td>';// close td of code name
@@ -373,6 +403,28 @@ function do_something($arg) {}
                             html += '</div>';
                         }
                     html += '</td>';
+                    html += '<td class="column-version-description">';
+                    if (
+                        typeof(codeItem.versions?.versions) === 'object' && 
+                        Array.isArray(codeItem.versions?.versions) &&
+                        codeItem.versions?.versions.length > 0
+                    ) {
+                        html += '<ul>';
+                        for (const eachVersion of codeItem.versions.versions) {
+                            const versionString = _.findKey(eachVersion);
+                            html += '<li>' + versionString;
+                            if (
+                                typeof(eachVersion[versionString]) === 'object' && 
+                                typeof(eachVersion[versionString]?.description) === 'string' &&
+                                eachVersion[versionString]?.description !== ''
+                            ) {
+                                html += ' ' + _.escape(eachVersion[versionString].description);
+                            }
+                            html += '</li>';
+                        }// endfor;
+                        html += '</ul>';
+                    }// endif;
+                    html += '</td>';// close version & descriptoin
                     html += '<td>' + (codeItem.versions?.min ?? '') + '</td>';
                     html += '<td>' + (codeItem.versions?.max ?? '') + '</td>';
                     html += '</tr>';
@@ -414,6 +466,28 @@ function do_something($arg) {}
                                 html += '</div>';
                             }
                             html += '</td>';// close td class member name
+                            html += '<td class="column-version-description">';
+                            if (
+                                typeof(memberItem.versions?.versions) === 'object' && 
+                                Array.isArray(memberItem.versions?.versions) &&
+                                memberItem.versions?.versions.length > 0
+                            ) {
+                                html += '<ul>';
+                                for (const eachVersion of memberItem.versions.versions) {
+                                    const versionString = _.findKey(eachVersion);
+                                    html += '<li>' + versionString;
+                                    if (
+                                        typeof(eachVersion[versionString]) === 'object' && 
+                                        typeof(eachVersion[versionString]?.description) === 'string' &&
+                                        eachVersion[versionString]?.description !== ''
+                                    ) {
+                                        html += ' ' + _.escape(eachVersion[versionString].description);
+                                    }
+                                    html += '</li>';
+                                }// endfor;
+                                html += '</ul>';
+                            }// endif;
+                            html += '</td>';// close version & descriptoin
                             html += '<td>' + (memberItem.versions?.min ?? '') + '</td>';
                             html += '<td>' + (memberItem.versions?.max ?? '') + '</td>';
                             html += '</tr>';
@@ -423,7 +497,7 @@ function do_something($arg) {}
                 const selectedTbody = document.querySelector(htmlSelector);
                 if (typeof(selectedTbody) === 'object' && selectedTbody !== null) {
                     if ('' === html) {
-                        html = '<tr><td colspan="3">Not found matched WordPress core data.</td></tr>';
+                        html = '<tr><td colspan="4">Not found matched WordPress core data.</td></tr>';
                     }
                     selectedTbody.innerHTML = html;
                 }
