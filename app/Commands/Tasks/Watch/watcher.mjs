@@ -62,21 +62,29 @@ export const watcher = class Watcher {
         if (command === 'delete') {
             // if command is delete (file and folder).
             for (const eachDestCLI of this.argv.destination) {
-                const destFullPath = path.resolve(eachDestCLI, Path.replaceDestinationFolder(file, destination));
-                const deleteResult = await deleteAsync(destFullPath, {force: true});
-                for (const item of deleteResult) {
-                    console.log('    (main watcher) - Deleted: ' + item);
-                };
+                try {
+                    const destFullPath = path.resolve(eachDestCLI, Path.replaceDestinationFolder(file, destination));
+                    const deleteResult = await deleteAsync(destFullPath, {force: true});
+                    for (const item of deleteResult) {
+                        console.log('    (main watcher) - Deleted: ' + item);
+                    };
+                } catch (err) {
+                    console.warn('    ' + TextStyles.txtWarning(err.message));
+                }
             }// endfor;
         }
 
         if (command !== 'delete') {
             // else, it is copy command.
             for (const eachDestCLI of this.argv.destination) {
-                const sourceFullPath = path.resolve(CW_DIR, file);
-                const destFullPath = path.resolve(Path.removeTrailingQuotes(eachDestCLI), Path.replaceDestinationFolder(file, destination));
-                FS.copyFileDir(sourceFullPath, destFullPath);
-                console.log('    (main watcher) >> Applied to ' + destFullPath);
+                try {
+                    const sourceFullPath = path.resolve(CW_DIR, file);
+                    const destFullPath = path.resolve(Path.removeTrailingQuotes(eachDestCLI), Path.replaceDestinationFolder(file, destination));
+                    FS.copyFileDir(sourceFullPath, destFullPath);
+                    console.log('    (main watcher) >> Applied to ' + destFullPath);
+                } catch (err) {
+                    console.warn('    ' + TextStyles.txtWarning(err.message));
+                }
             }// endfor;
         }// endif;
 
