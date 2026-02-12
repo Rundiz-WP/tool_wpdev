@@ -23,27 +23,24 @@ Run command `node wpdev.js requires-at-least --help` to see more help message.
 * Set OS environment to be able to access command `node wpdev.js` easily. For example on Windows:
   * Create file **wpdev.bat**
   * Add code below.
-```
+  ```
   @ECHO OFF
-:: for Node wpdev.js v2.
-
-
-setlocal
-call :setESC
-
-
-:: use `cd` command to help working with `--version` option but it is not necessary.
-::cd "D:\my-path\wpdev"
-call node "D:\my-path\wpdev\wpdev.js" %*
-
-
-:: esc for color text & background. ===============================================================================================
-:setESC
-for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do rem"') do (
-  set ESC=%%b
+  :: for Node wpdev.js v2.
+  
+  setlocal
+  call :setESC
+  
+  :: use `cd` command to help working with `--version` option but it is not necessary.
+  ::cd "D:\my-path\wpdev"
+  call node "D:\my-path\wpdev\wpdev.js" %*
+  
+  :: esc for color text & background. ===============================================================================================
+  :setESC
+  for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do rem"') do (
+    set ESC=%%b
+    exit /B 0
+  )
   exit /B 0
-)
-exit /B 0
-:: end color text & background. ===================================================================================================
-```
+  :: end color text & background. ===================================================================================================
+  ```
   * If **wpdev.bat** is in environment path then you can call `wpdev` instead of `node wpdev.js`.
