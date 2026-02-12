@@ -48,6 +48,6 @@ Run command `node wpdev.js requires-at-least --help` to see more help message.
 ### Install in your WordPress project
 To use this command full functional in your WordPress plugins or themes, you need to install into your project.
 
-* Create file **node_tasks/config.json** in your root folder of the project. If you are working on plugin "plugin-name" where contain plugin file "plugin-name/plugin-name.php" then create this file in "plugin-name/node_tasks/config.json".
-* Copy contents in **config-example.json** from this repository and paste into your **node_tasks/config.json**.
+* Create file **node_tasks/config/config.json** in your root folder of the project. If you are working on plugin "plugin-name" where contain plugin file "plugin-name/plugin-name.php" then create this file in "plugin-name/node_tasks/config/config.json".
+* Copy contents in **config-example.json** from this repository and paste into your **node_tasks/config/config.json**.
 * Start modify. You can read more about this in [**readmes/main-wpdev-tasks-readme.md**](./readmes/main-wpdev-tasks-readme.md).
