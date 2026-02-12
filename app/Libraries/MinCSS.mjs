@@ -10,6 +10,8 @@ import CleanCSS from "clean-css";
 import fs from 'node:fs';
 import fsPromise from 'node:fs/promises';
 import path from 'node:path';
+// import this app's useful class.
+import TextStyles from './TextStyles.mjs';
 // import class that extends from.
 import BasedBundler from './BasedBundler.mjs';
 
