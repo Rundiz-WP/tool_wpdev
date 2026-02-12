@@ -80,24 +80,28 @@ export const clean = class Clean {
         destinationPath = Path.removeTrailingQuotes(destinationPath);
         let totalDeleted = 0;
 
-        const deleteOptions = {
-            cwd: destinationPath,
-            dot: true,
-            dryRun: (argv.preview ? true : false),
-            force: true
-        };
-        const deleteResult = await deleteAsync('./**', deleteOptions);
-        deleteResult.forEach((item) => {
-            if (argv.preview) {
-                console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
-            } else {
-                console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+        try {
+            const deleteOptions = {
+                cwd: destinationPath,
+                dot: true,
+                dryRun: (argv.preview ? true : false),
+                force: true
+            };
+            const deleteResult = await deleteAsync('./**', deleteOptions);
+            deleteResult.forEach((item) => {
+                if (argv.preview) {
+                    console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
+                } else {
+                    console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+                }
+                totalDeleted++;
+            });// end forEach;
+            if (deleteResult.length <= 0) {
+                console.log('    Nothing to delete, skipping.');
             }
-            totalDeleted++;
-        });// end forEach;
-        if (deleteResult.length <= 0) {
-            console.log('    Nothing to delete, skipping.');
-        }
+        } catch (err) {
+            console.error('    ' + TextStyles.txtError(err.message));
+        }// endtry;
 
         if (argv.preview) {
             console.log(TextStyles.txtInfo('  Total ' + totalDeleted + ' items will be deleted.'));
