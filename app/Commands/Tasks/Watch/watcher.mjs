@@ -145,7 +145,7 @@ export const watcher = class Watcher {
      * @param {string} source The source folder full path.
      */
     #displayFileChanged(event, file, source) {
-        console.log('  (main watcher) File changed (' + event + '): ' + path.resolve(source, file));
+        console.log('  (main watcher) File changed (event ' + event + '): ' + path.resolve(source, file));
     }// displayFileChanged
 
     /**
