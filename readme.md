@@ -23,7 +23,7 @@ Run command `node wpdev.js requires-at-least --help` to see more help message.
 * Set OS environment to be able to access command `node wpdev.js` easily. For example on Windows:
   * Create file **wpdev.bat**
   * Add code below.
-  ```
+```
   @ECHO OFF
 :: for Node wpdev.js v2.
 
