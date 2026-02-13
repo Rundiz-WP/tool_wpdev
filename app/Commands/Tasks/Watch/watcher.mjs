@@ -20,12 +20,16 @@
 
 
 import { deleteAsync } from "del";
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 // import libraries.
 import CwdConfig from "../../../Libraries/CwdConfig.mjs";
 import FS from "../../../Libraries/FS.mjs";
 import Path from "../../../Libraries/Path.mjs";
 import TextStyles from "../../../Libraries/TextStyles.mjs";
+
+
+const __filename = fileURLToPath(import.meta.url);
 
 
 export const watcher = class Watcher {
@@ -69,7 +73,7 @@ export const watcher = class Watcher {
                         console.log('    (main watcher) - Deleted: ' + item);
                     };
                 } catch (err) {
-                    console.warn('    ' + TextStyles.txtWarning(err.message));
+                    console.warn('    ' + TextStyles.txtWarning(err.message + '; ' + __filename));
                 }
             }// endfor;
         }
@@ -83,7 +87,7 @@ export const watcher = class Watcher {
                     FS.copyFileDir(sourceFullPath, destFullPath);
                     console.log('    (main watcher) >> Applied to ' + destFullPath);
                 } catch (err) {
-                    console.warn('    ' + TextStyles.txtWarning(err.message));
+                    console.warn('    ' + TextStyles.txtWarning(err.message + '; ' + __filename));
                 }
             }// endfor;
         }// endif;

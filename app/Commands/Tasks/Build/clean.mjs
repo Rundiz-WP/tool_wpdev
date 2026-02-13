@@ -25,11 +25,15 @@
 
 
 import { deleteAsync } from 'del';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 // import libraries.
 import CwdConfig from '../../../Libraries/CwdConfig.mjs';
 import Path from '../../../Libraries/Path.mjs';
 import TextStyles from '../../../Libraries/TextStyles.mjs';
+
+
+const __filename = fileURLToPath(import.meta.url);
 
 
 export const clean = class Clean {
@@ -100,7 +104,7 @@ export const clean = class Clean {
                 console.log('    Nothing to delete, skipping.');
             }
         } catch (err) {
-            console.error('    ' + TextStyles.txtError(err.message));
+            console.error('    ' + TextStyles.txtError(err.message + '; ' + __filename));
         }// endtry;
 
         if (argv.preview) {
