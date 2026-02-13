@@ -12,7 +12,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "archiver": "^7.0.1",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "clean-css": "^5.3.3",
     "cli-color": "^2.0.4",
     "compare-versions": "^6.1.1",
