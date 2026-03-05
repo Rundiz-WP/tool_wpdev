@@ -142,29 +142,33 @@ export const clean = class Clean {
         let totalDeleted = 0;
         for (const dest of buildObj.clean.destinations) {
             console.log('  Delete patterns: ' + dest.patterns);
-            let defaultOptions = {
-                cwd: CW_DIR,
-                dryRun: (argv.preview ? true : false),
-            }
-            let options = (dest.options ?? {});
-            options = {
-                ...defaultOptions,
-                ...options
-            }
-            console.log('    With options: ', options);
-
-            const deleteResult = await deleteAsync(dest.patterns, options);
-            deleteResult.forEach((item) => {
-                if (argv.preview) {
-                    console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
-                } else {
-                    console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+            try {
+                let defaultOptions = {
+                    cwd: CW_DIR,
+                    dryRun: (argv.preview ? true : false),
                 }
-                totalDeleted++;
-            });// end forEach;
-            if (deleteResult.length <= 0) {
-                console.log('    Nothing to delete, skipping.');
-            }
+                let options = (dest.options ?? {});
+                options = {
+                    ...defaultOptions,
+                    ...options
+                }
+                console.log('    With options: ', options);
+
+                const deleteResult = await deleteAsync(dest.patterns, options);
+                deleteResult.forEach((item) => {
+                    if (argv.preview) {
+                        console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
+                    } else {
+                        console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+                    }
+                    totalDeleted++;
+                });// end forEach;
+                if (deleteResult.length <= 0) {
+                    console.log('    Nothing to delete, skipping.');
+                }
+            } catch (err) {
+                console.error('    ' + TextStyles.txtError(err.message + '; ' + __filename));
+            }// endtry;
         }// endfor;
 
         if (argv.preview) {
