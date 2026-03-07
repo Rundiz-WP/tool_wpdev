@@ -7,7 +7,7 @@
 
 
 import {Buffer} from 'node:buffer';
-import CleanCSS from "clean-css";
+import * as sass from 'sass';
 import ConcatSM from 'concat-with-sourcemaps';
 import fs from 'node:fs';
 import fsPromise from 'node:fs/promises';
@@ -77,10 +77,34 @@ export default class Concat extends BasedBundler {
 
 
     /**
+     * Inline `.css` @imports recursively into CSS content string.
+     * Needed because Sass intentionally ignores @import ending in `.css`.
+     *
+     * @since 0.1.2
+     * @param {string} content The CSS content string.
+     * @param {string} baseDir The base directory for resolving import paths.
+     * @returns {string} CSS content with @imports inlined.
+     */
+    _inlineCssContentsImports(content, baseDir = '.') {
+        return content.replace(
+            /@import\s+['"]([^'"]+\.css)['"]\s*;/g,
+            (match, importPath) => {
+                const fullPath = path.resolve(baseDir, importPath);
+                if (fs.existsSync(fullPath)) {
+                    const importedContent = fs.readFileSync(fullPath, 'utf8');
+                    return this._inlineCssContentsImports(importedContent, path.dirname(fullPath));
+                }
+                console.warn('    ' + 'Warning: Could not find import: ' + importPath);
+                return match;
+            }
+        );
+    }// _inlineCssContentsImports
+
+
+    /**
      * Clean or beautify CSS.
      * 
-     * @link https://www.npmjs.com/package/clean-css This class is depend on clean-css package.
-     * @param {CleanCSS.Options} options The `CleanCSS` (clean-css) options.
+     * @param {import('sass').Options<"sync">} options The Sass options.
      */
     cleanCSS(options = {}) {
         if (typeof(options) !== 'object') {
@@ -92,26 +116,21 @@ export default class Concat extends BasedBundler {
         }
 
         const defaults = {
-            format: 'beautify',
+            style: 'expanded',
             sourceMap: this.sourceMap,
+            syntax: 'css',
         }
         options = {
             ...defaults,
             ...options,
         }
 
-        let inputSourcemap = '';
+        const result = sass.compileString(this._content.toString(), options);
 
-        if (options.sourceMap === true) {
-            inputSourcemap = JSON.parse(this._sourceMapContent);
-        }
+        this._content = new Buffer.from(result.css);
 
-        const cleanCss = new CleanCSS(options);
-        const output = cleanCss.minify(this._content.toString(), inputSourcemap);
-
-        this._content = new Buffer.from(output.styles);
-        if (this.sourceMap === true) {
-            this._sourceMapContent = output.sourceMap.toString();
+        if (this.sourceMap === true && result.sourceMap) {
+            this._sourceMapContent = JSON.stringify(result.sourceMap);
         }
     }// cleanCSS
 
@@ -189,7 +208,8 @@ export default class Concat extends BasedBundler {
             if (!fs.existsSync(sourceFullPath)) {
                 console.warn('    ' + TextStyles.txtWarning('Warning: ' + sourceFullPath + ' is not found.'));
             } else {
-                const sourceContent = await fsPromise.readFile(sourceFullPath);
+                const rawContent = await fsPromise.readFile(sourceFullPath, 'utf8');
+                const sourceContent = this._inlineCssContentsImports(rawContent, path.dirname(sourceFullPath));
                 let inputSourcemap = undefined;
                 if (this.sourceMap === true && fs.existsSync(sourceFullPath + '.map')) {
                     inputSourcemap = JSON.parse(await fsPromise.readFile(sourceFullPath + '.map'));

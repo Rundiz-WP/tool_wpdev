@@ -1,6 +1,6 @@
 {
   "name": "wp-dev",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "WordPress development tools.",
   "type": "module",
   "private": true,
@@ -13,7 +13,6 @@
   "dependencies": {
     "archiver": "^7.0.1",
     "chokidar": "^5.0.0",
-    "clean-css": "^5.3.3",
     "cli-color": "^2.0.4",
     "compare-versions": "^6.1.1",
     "concat-with-sourcemaps": "^1.1.0",
@@ -23,6 +22,8 @@
     "lodash": "^4.17.21",
     "minimatch": "^10.0.3",
     "php-parser": "^3.2.5",
+    "sass": "^1.97.3",
+    "source-map": "^0.7.6",
     "terser": "^5.43.1",
     "uglify-js": "^3.19.3",
     "yargs": "^18.0.0"
