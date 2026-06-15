@@ -70,9 +70,13 @@ export const customWatches = class CustomWatches {
                 console.log('  Running ' + fullPathWatcherFile);
             }
 
-            const {default: customWatchClass} = await import(url.pathToFileURL(fullPathWatcherFile));
-            const customWatchClassObj = new customWatchClass(this.argv);
-            customWatchClassObj.run();
+            try {
+                const {default: customWatchClass} = await import(url.pathToFileURL(fullPathWatcherFile));
+                const customWatchClassObj = new customWatchClass(this.argv);
+                customWatchClassObj.run();
+            } catch (err) {
+                console.error('  ' + TextStyles.txtError('Error: ' + err.message));
+            }// endtry;
         }// endfor;
         
         console.log(TextStyles.taskHeader('End custom watch task.'));
