@@ -112,7 +112,7 @@ export const versionWriter = class VersionWriter {
             + '[\\w\\(\\)\\.\\s\\\/\'\\-]*\\s*,\\s*'// [asset URL.]space*,space*
             + '[\\w\\(\\)\\.\\s\\\/\'\\-\\[\\]]*\\s*,\\s*'// [dependency array]space*,space*
         + '[\'"])'// end group2 [quote or double quote]
-        + '([\\d\\w\\(\\)\\.\\-\\+]+)'// group 3 version number
+        + '([\\d]+[\\d\\w\\(\\)\\.\\-\\+]+)'// group 3 version number
         + '([\'"])'// group 4 [quote or double quote]
         ;
     }// getRegexPattern
