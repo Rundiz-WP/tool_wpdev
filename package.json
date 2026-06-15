@@ -1,6 +1,6 @@
 {
   "name": "wp-dev",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "WordPress development tools.",
   "type": "module",
   "private": true,
