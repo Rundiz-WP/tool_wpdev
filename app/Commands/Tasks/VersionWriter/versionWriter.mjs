@@ -203,10 +203,34 @@ export const versionWriter = class VersionWriter {
             for (const [mhIndex, mhRegex] of eachCfgPackage.assetsDataPattern.entries()) {
                 // mh = Module assets data handle in PHP file.
                 let regExp = new RegExp(this.#getRegexPattern(mhRegex), 'gi');
+
+                // Detect matches and their line numbers before replacing.
+                let match;
+                let foundMatched = false;
+                const matchedInfos = [];
+                while ((match = regExp.exec(moduleAssetsDataContents)) !== null) {
+                    foundMatched = true;
+                    const patternLine = moduleAssetsDataContents.substring(0, match.index).split('\n').length;
+                    const versionOffsetInMatch = match[1].length + match[2].length;
+                    const versionStartIndex = match.index + versionOffsetInMatch;
+                    const versionLine = moduleAssetsDataContents.substring(0, versionStartIndex).split('\n').length;
+                    matchedInfos.push({
+                        oldVersion: match[3],
+                        patternLine: patternLine,
+                        versionLine: versionLine,
+                    });
+                }
+
+                // Reset lastIndex before replace because the same RegExp object was used in exec() loop above.
+                regExp.lastIndex = 0;
                 moduleAssetsDataContents = moduleAssetsDataContents.replace(regExp, '$1$2' + installedVersion + '$4');
-                const foundMatched = moduleAssetsDataContents.match(regExp);
-                if (foundMatched && typeof(foundMatched) === 'object' && foundMatched.length > 0) {
+
+                if (foundMatched) {
                     console.log('    Found version ' + installedVersion + ' for "' + mhRegex + '" handle.');
+                    for (const matchedInfo of matchedInfos) {
+                        console.info('      Found matched pattern in file: ' + assetsDataFile + ':' + matchedInfo.patternLine + '.');
+                        console.info('        Version number (' + matchedInfo.oldVersion + ') in file: ' + assetsDataFile + ':' + matchedInfo.versionLine + '.');
+                    }
                 } else {
                     console.warn('    ' + TextStyles.txtWarning('Warning: The handle "' + mhRegex + '" was not found in assets data file. Couldn\'t replace version.'));
                 }
