@@ -147,15 +147,22 @@ export const pack = class Pack {
             }// endif; preview
 
             return new Promise((resolve, reject) => {
-                const zoutput = fs.createWriteStream(zipFullPath);
+                const tmpZipFullPath = zipFullPath.replace(/\.zip$/i, '.tmpzip');
+                const zoutput = fs.createWriteStream(tmpZipFullPath);
                 const archive = archiver('zip', {
                     zlib: { level: 9 } // Sets the compression level.
                 });
 
                 // events
                 zoutput.on('close', function() {
-                    resolve();
-                    console.log(TextStyles.txtSuccess('    Zip archive should be created at ' + zipFullPath + '.'));
+                    fs.rename(tmpZipFullPath, zipFullPath, (err) => {
+                        if (err) {
+                            reject(err);
+                            throw new Error(err.message);
+                        }
+                        resolve();
+                        console.log(TextStyles.txtSuccess('    Zip archive should be created at ' + zipFullPath + '.'));
+                    });
                 });
                 // archiver events
                 archive.on('entry', (entry) => {
