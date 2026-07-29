@@ -163,8 +163,7 @@ export const watcher = class Watcher {
         if (typeof(argv) === 'object') {
             thisClass.argv = argv;
             if (Array.isArray(thisClass.argv.destination)) {
-                // recover any destinations that were merged together (Windows trailing 
-                // backslash + quote issue) and remove wrapping quotes/trailing slashes.
+                // Sanitize destinations.
                 thisClass.argv.destination = Path.sanitizeCliDestinations(thisClass.argv.destination);
             }
         }
