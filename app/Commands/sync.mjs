@@ -24,8 +24,8 @@ export const builder = (yargs) => {
         'destination': {
             alias: 'd',
             demandOption: true,
-            describe: 'The full path to plugin or theme folder in the WordPress installation. For example: \"/var/www/html/wp-content/themes/mytheme\". This option is required if you want to copy your working project to test in WordPress installation folder.',
-            type: 'string',
+            describe: 'The full path to plugin or theme folder in the WordPress installation. For example: \"/var/www/html/wp-content/themes/mytheme\". This option is required if you want to copy your working project to test in WordPress installation folder. You can provide multiple values to synchronize to multiple destinations.',
+            type: 'array',
         },
         'wpdir': {
             demandOption: false,
@@ -39,6 +39,7 @@ export const builder = (yargs) => {
         },
     })
     .example('$0 sync --destination="/var/www/html/wp-content/plugins/myplugin"')
+    .example('$0 sync --destination="/var/www/html/wp-content/plugins/myplugin" "/var/www/html/site2/wp-content/plugins/myplugin"')
     .example('$0 sync --destination="/var/www/html/wp-content/plugins/myplugin" --wpdir="/var/www/mygit/myplugin"')
     .example('$0 sync --destination="/var/www/html/wp-content/plugins/myplugin" --wpdir="/var/www/mygit/mytheme" --preview')
     ;

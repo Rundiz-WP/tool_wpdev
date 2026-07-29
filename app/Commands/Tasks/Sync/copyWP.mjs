@@ -46,6 +46,13 @@ export const copyWP = class CopyWP {
 
 
     /**
+     * @since 0.1.4
+     * @type {string} The destination full path (one of `--destination` CLI values) that is currently being processed.
+     */
+    #currentDestination;
+
+
+    /**
      * Check for required properties in configuration file.
      * 
      * @private This method was called from `#copyToWP()`.
@@ -79,7 +86,7 @@ export const copyWP = class CopyWP {
         const filename = path.basename(eachFile);
         const parentDestinationPatterns = path.dirname(Path.replaceDestinationFolder(eachFile, item.destination, item.patterns));
         const sourcePath = path.resolve(CW_DIR, eachFile);
-        let destPath = Path.removeTrailingQuotes(this.argv.destination);
+        let destPath = this.#currentDestination;
         let destPathWithParentDestPatterns = path.resolve(destPath, parentDestinationPatterns);
         const destinationRelativeToParentDestinationPatterns = path.relative(destPath, path.resolve(destPath, parentDestinationPatterns));
         if (destinationRelativeToParentDestinationPatterns.includes('..') === true) {
@@ -120,11 +127,14 @@ export const copyWP = class CopyWP {
      * 
      * @private This method was called from `init()`.
      * @param {object[]} copyWP Copy WP array object.
+     * @param {string} destination Full path to the destination (one of `--destination` CLI values) to copy to.
      */
-    async #copyToWP(copyWP) {
+    async #copyToWP(copyWP, destination) {
         const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         let totalCopied = 0;
-        console.log('  Copy to WP.');
+        console.log('  Copy to WP: ' + destination);
+
+        this.#currentDestination = destination;
 
         this.#checkRequiredProperties(copyWP);
 
@@ -167,7 +177,7 @@ export const copyWP = class CopyWP {
                 console.log('    ' + TextStyles.txtSuccess('Total ' + totalCopied + ' items has been copied.'));
             }
 
-            console.log('  End copy to WP.');
+            console.log('  End copy to WP: ' + destination);
             return Promise.resolve();
         });
     }// #copyToWP
@@ -234,12 +244,22 @@ export const copyWP = class CopyWP {
 
         console.log(TextStyles.taskHeader('Copy files to WordPress installation folder.'));
 
-        if (!argv.destination) {
+        if (
+            !argv.destination || 
+            (Array.isArray(argv.destination) && argv.destination.length <= 0)
+        ) {
             console.error('  ' + TextStyles.txtError('There is no `--destination` option specify. Skipping.'));
             return ;
         }
 
-        await thisClass.#copyToWP(buildObj.copy.copyWP);
+        // Sanitize destinations.
+        const destinations = Path.sanitizeCliDestinations(
+            Array.isArray(argv.destination) ? argv.destination : [argv.destination]
+        );
+
+        for (const eachDestination of destinations) {
+            await thisClass.#copyToWP(buildObj.copy.copyWP, eachDestination);
+        }// endfor;
 
         console.log(TextStyles.taskHeader('End copy files to WordPress installation folder.'));
     }// init

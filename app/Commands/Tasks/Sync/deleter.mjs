@@ -148,44 +148,55 @@ export const deleter = class Delete {
 
         console.log(TextStyles.taskHeader('Delete destination on WordPress installation folder.'));
 
-        if (!argv.destination) {
+        if (
+            !argv.destination || 
+            (Array.isArray(argv.destination) && argv.destination.length <= 0)
+        ) {
             console.error('  ' + TextStyles.txtError('There is no `--destination` option specify. Skipping.'));
             return ;
         }
 
-        let destinationPath = path.resolve(argv.destination);
-        destinationPath = destinationPath.replaceAll('\\', '/');// make it forward slash.
-        destinationPath = Path.removeTrailingQuotes(destinationPath);
-        thisClass.#destination = destinationPath;
+        // Sanitize destinations.
+        const destinations = Path.sanitizeCliDestinations(
+            Array.isArray(argv.destination) ? argv.destination : [argv.destination]
+        );
 
-        const deleteList = await thisClass.#globFiles(buildObj.copy.copyWP);
-        
-        let totalDeleted = 0;
+        for (const eachDestination of destinations) {
+            let destinationPath = path.resolve(eachDestination);
+            destinationPath = destinationPath.replaceAll('\\', '/');// make it forward slash.
+            thisClass.#destination = destinationPath;
 
-        const deleteOptions = {
-            cwd: destinationPath,
-            dot: true,
-            dryRun: (argv.preview ? true : false),
-            force: true
-        };
-        const deleteResult = await deleteAsync(deleteList, deleteOptions);
-        deleteResult.forEach((item) => {
-            if (argv.preview) {
-                console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
-            } else {
-                console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+            console.log('  Destination: ' + destinationPath);
+
+            const deleteList = await thisClass.#globFiles(buildObj.copy.copyWP);
+
+            let totalDeleted = 0;
+
+            const deleteOptions = {
+                cwd: destinationPath,
+                dot: true,
+                dryRun: (argv.preview ? true : false),
+                force: true
+            };
+            const deleteResult = await deleteAsync(deleteList, deleteOptions);
+            deleteResult.forEach((item) => {
+                if (argv.preview) {
+                    console.log('    - Will be deleted: ' + item.replaceAll(/\\/g, '/'));
+                } else {
+                    console.log('    - Deleted: ' + item.replaceAll(/\\/g, '/'));
+                }
+                totalDeleted++;
+            });// end forEach;
+            if (deleteResult.length <= 0) {
+                console.log('    Nothing to delete, skipping.');
             }
-            totalDeleted++;
-        });// end forEach;
-        if (deleteResult.length <= 0) {
-            console.log('    Nothing to delete, skipping.');
-        }
 
-        if (argv.preview) {
-            console.log(TextStyles.txtInfo('  Total ' + totalDeleted + ' items will be deleted.'));
-        } else {
-            console.log(TextStyles.txtSuccess('  Total ' + totalDeleted + ' items has been deleted.'));
-        }
+            if (argv.preview) {
+                console.log(TextStyles.txtInfo('  Total ' + totalDeleted + ' items will be deleted.'));
+            } else {
+                console.log(TextStyles.txtSuccess('  Total ' + totalDeleted + ' items has been deleted.'));
+            }
+        }// endfor;
 
         console.log(TextStyles.taskHeader('End clean destination on WordPress installation folder.'));
     }// WPdestination
