@@ -83,7 +83,7 @@ export const watcher = class Watcher {
             for (const eachDestCLI of this.argv.destination) {
                 try {
                     const sourceFullPath = path.resolve(CW_DIR, file);
-                    const destFullPath = path.resolve(Path.removeTrailingQuotes(eachDestCLI), Path.replaceDestinationFolder(file, destination));
+                    const destFullPath = path.resolve(eachDestCLI, Path.replaceDestinationFolder(file, destination));
                     FS.copyFileDir(sourceFullPath, destFullPath);
                     console.log('    (main watcher) >> Applied to ' + destFullPath);
                 } catch (err) {
@@ -162,6 +162,11 @@ export const watcher = class Watcher {
 
         if (typeof(argv) === 'object') {
             thisClass.argv = argv;
+            if (Array.isArray(thisClass.argv.destination)) {
+                // recover any destinations that were merged together (Windows trailing 
+                // backslash + quote issue) and remove wrapping quotes/trailing slashes.
+                thisClass.argv.destination = Path.sanitizeCliDestinations(thisClass.argv.destination);
+            }
         }
 
         const watcherList = thisClass.#checkRequiredConfigProperty();

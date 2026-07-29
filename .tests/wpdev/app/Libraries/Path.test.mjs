@@ -38,6 +38,61 @@ describe('Paths.mjs test', () => {
     });
 
 
+    test('Test sanitize CLI destinations', () => {
+        // normal case, single destination, no trailing slash issue.
+        expect(Path.sanitizeCliDestinations(['/var/www/html/wp-content/plugins/myplugin']))
+        .toEqual(['/var/www/html/wp-content/plugins/myplugin']);
+
+        // trailing slash (forward and back) must be removed.
+        expect(Path.sanitizeCliDestinations([
+            '/var/www/html/wp-content/plugins/myplugin/',
+            'D:\\wwwroot\\wordpress\\wp-content\\plugins\\myplugin\\',
+        ]))
+        .toEqual([
+            '/var/www/html/wp-content/plugins/myplugin',
+            'D:\\wwwroot\\wordpress\\wp-content\\plugins\\myplugin',
+        ]);
+
+        // wrapping quotes must be removed.
+        expect(Path.sanitizeCliDestinations(['"/var/www/html/wp-content/plugins/myplugin"']))
+        .toEqual(['/var/www/html/wp-content/plugins/myplugin']);
+
+        // cleanly-quoted destinations (no trailing backslash before the closing quote) are 
+        // never a problem in the first place: the shell closes the quote normally, so yargs/Node 
+        // already receives them as separate, quote-free array elements. this must be a no-op.
+        expect(Path.sanitizeCliDestinations([
+            'C:\\my\\path',
+            'C:\\my\\path2',
+        ]))
+        .toEqual([
+            'C:\\my\\path',
+            'C:\\my\\path2',
+        ]);
+
+        // reproduce the reported bug: on Windows, a quoted `--destination` value that ends 
+        // with a backslash (example: `"D:\path\one\" "D:\path\two\"`) causes the shell to 
+        // NOT close the first quoted string (the trailing `\"` escapes the quote instead of 
+        // ending it), merging both destinations plus a literal `"` into a single argv value.
+        expect(Path.sanitizeCliDestinations([
+            'D:\\wwwroot\\wordpress\\multisite\\wp-content\\plugins\\plugin-template" D:\\wwwroot\\wordpress\\singlesite\\wp-content\\plugins\\plugin-template"'
+        ]))
+        .toEqual([
+            'D:\\wwwroot\\wordpress\\multisite\\wp-content\\plugins\\plugin-template',
+            'D:\\wwwroot\\wordpress\\singlesite\\wp-content\\plugins\\plugin-template',
+        ]);
+
+        // same as above but with more than 2 merged destinations.
+        expect(Path.sanitizeCliDestinations([
+            'D:\\path\\one" D:\\path\\two" D:\\path\\three"'
+        ]))
+        .toEqual([
+            'D:\\path\\one',
+            'D:\\path\\two',
+            'D:\\path\\three',
+        ]);
+    });
+
+
     test('Test replace begins of file path with destination', () => {
         expect(Path.replaceDestinationFolder('assets/vendor/bootstrap/js/file.js', 'assets/vendor/bootstrap', ['assets/vendor/bootstrap/**']))
         .toMatch(/^assets\/vendor\/bootstrap\/js\/file\.js$/);

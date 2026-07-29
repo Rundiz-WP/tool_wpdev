@@ -35,6 +35,59 @@ export default class Path {
 
 
     /**
+     * Sanitize an array of destination paths that came from a CLI option that accept multiple 
+     * values (such as `--destination` on `watch` command).
+     * 
+     * On Windows, quoting a path that ends with a backslash (example: `"C:\my\path\"`) is a trap: 
+     * the shell/OS command line parser reads that trailing `\"` as an escaped double quote 
+     * character rather than as "a backslash followed by the closing quote". This means the quoted 
+     * string is never closed, so the parser keeps consuming everything after it - including any 
+     * following quoted `--destination` value(s) - as a single argument, and it inserts a literal 
+     * `"` character at the point where the accidental escape happened. For example, the CLI input:  
+     * `--destination="C:\path\one\" "C:\path\two\"`  
+     * is received by this app as ONE corrupted value: `C:\path\one" C:\path\two"` instead of two 
+     * separate paths.
+     * 
+     * This method detects that corruption pattern (a `"` immediately followed by whitespace) and 
+     * splits it back into separate paths, then removes wrapping quotes and trailing slashes 
+     * (forward and back) from every resulting path.
+     * 
+     * @param {string[]} destinations Array of destination paths. Example: `argv.destination`.
+     * @returns {string[]} Return the cleaned-up (possibly longer) array of destination paths.
+     */
+    static sanitizeCliDestinations(destinations) {
+        if (!Array.isArray(destinations)) {
+            return destinations;
+        }
+
+        const result = [];
+        for (const destination of destinations) {
+            if (typeof(destination) !== 'string') {
+                result.push(destination);
+                continue;
+            }
+
+            // recover destination(s) that were merged together because of the Windows 
+            // trailing-backslash-escapes-quote issue explained in the docblock above.
+            const splitted = destination.split(/\"\s+/);
+
+            for (let eachPath of splitted) {
+                eachPath = eachPath.replace(/^[\"\']+/, '');// remove begin quote(s).
+                eachPath = Path.removeTrailingQuotes(eachPath);// remove trailing quote(s).
+                eachPath = Path.removeTrailingSlash(eachPath);// remove trailing slash(es) or backslash(es).
+                eachPath = eachPath.trim();
+
+                if (eachPath !== '') {
+                    result.push(eachPath);
+                }
+            }// endfor;
+        }// endfor;
+
+        return result;
+    }// sanitizeCliDestinations
+
+
+    /**
      * Remove trailing slash(es).
      * 
      * @param {String} filePath The file path.
