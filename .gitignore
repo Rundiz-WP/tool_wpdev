@@ -1,14 +1,14 @@
-/.vs
-/node_modules/
-
-#eclipse project files.
-/.buildpath
-/.project
-/.settings
-/.vscode
-
 /.requires-at-least*
 /app-requires-at-least/Commands/Requires-at-least/Tasks/Check/.php-core-codes.json
 /config/config.json.bak*
 /config/config.bak*
+/node_modules/
 /tool_wpdev.zip
+
+# Eclipse ignore files.
+/.settings/
+/.buildpath
+/.project
+
+# Visual Studio Code file.
+/.vscode/
