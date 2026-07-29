@@ -21,7 +21,7 @@
 'use strict';
 
 
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import fs from 'node:fs';
 import path from 'node:path';
 // import libraries.
@@ -149,7 +149,7 @@ export const pack = class Pack {
             return new Promise((resolve, reject) => {
                 const tmpZipFullPath = zipFullPath.replace(/\.zip$/i, '.tmpzip');
                 const zoutput = fs.createWriteStream(tmpZipFullPath);
-                const archive = archiver('zip', {
+                const archive = new ZipArchive({
                     zlib: { level: 9 } // Sets the compression level.
                 });
 
