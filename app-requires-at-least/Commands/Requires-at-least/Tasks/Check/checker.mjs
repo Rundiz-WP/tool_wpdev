@@ -121,7 +121,10 @@ export const checker = class Checker {
             if (fs.existsSync(phpCoreCodesFilePath)) {
                 fs.unlinkSync(phpCoreCodesFilePath);
             }
-            fs.renameSync(preparePHPCoreCodesFolder + '/.php-core-codes.json', phpCoreCodesFilePath);
+            // fs.renameSync will cause error "Node EXDEV: cross-device link not permitted, rename ...".
+            // use copy then delete source instead.
+            fs.copyFileSync(preparePHPCoreCodesFolder + '/.php-core-codes.json', phpCoreCodesFilePath, fs.constants.COPYFILE_FICLONE);
+            fs.unlinkSync(preparePHPCoreCodesFolder + '/.php-core-codes.json');
 
             if (!fs.existsSync(phpCoreCodesFilePath)) {
                 console.error(TextStyles.txtError('The prepare PHP core codes data file is unable to created. (' + phpCoreCodesFilePath + ').'));
