@@ -79,7 +79,7 @@ export const createPHP = class CreatePHP {
                 content += 'namespace ' + item.namespace + ';\n\n';
             }
 
-            content += 'if (!' + existsFunction + '("\\\\' + escapedObjectName + '")) {\n';
+            content += 'if (!' + existsFunction + '(\'\\\\' + escapedObjectName + '\')) {\n';
             content += '    ' + item.objectType + ' ' + item.objectName + '\n';
             content += '    {\n';
             content += '        // Your code here.\n';
