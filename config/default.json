@@ -33,6 +33,7 @@
                         ".git",
                         ".phpdoc",
                         ".phpunit*",
+                        ".vscode",
                         "assets-src",
                         "blocks-src",
                         "composer.json",
